@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open --mode development",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test": "vue-cli-service test:unit"
   },
   "dependencies": {
     "vue": "^2.5.16",
@@ -33,7 +33,24 @@
       "plugin:vue/essential",
       "@vue/prettier"
     ],
-    "rules": {},
+    "rules": {
+      "vue/attribute-hyphenation": [
+        "error",
+        "always"
+      ],
+      "vue/html-end-tags": "error",
+      "vue/html-indent": [
+        "error",
+        "tab"
+      ],
+      "vue/require-prop-types": "error",
+      "vue/attributes-order": "error",
+      "vue/html-quotes": [
+        "error",
+        "double"
+      ],
+      "vue/order-in-components": "error"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
