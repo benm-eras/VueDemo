@@ -1,35 +1,45 @@
 import { expect } from "chai";
 import { shallowMount } from "@vue/test-utils";
 import MyComponent from "@/components/MyComponent.vue";
+import _ from "lodash";
 
 describe("MyComponent.vue", () => {
-  it("should find child `.page` elements", () => {
-    let pages = [];
-    let count = 3;
+  let wrapper;
 
-    for(let i = 1; i <= count; i++)
-      pages.push(`<div class="page">Page ${i}</div>`)
-
-    const wrapper = shallowMount(MyComponent, {
-      slots: { default: pages }
-    });
-
-    expect(wrapper.vm.pages.length).to.equal(count);
+  beforeEach(() => {
+    wrapper = shallowMount(MyComponent, {});
   });
 
-  it("should **only** find child pages `.page` elements", () => {
-    let pages = [];
-    let count = 3;
+  describe("setting `show` to `true`", () => {
+    it("should cause `showOuter` and `showInner` to be set to `true`", () => {
+      wrapper.setProps({ show: true });
 
-    pages.push(`<div class="shade"></div>`);
-
-    for(let i = 1; i <= count; i++)
-      pages.push(`<div class="page">Page ${i}</div>`)
-
-    const wrapper = shallowMount(MyComponent, {
-      slots: { default: pages }
+      expect(wrapper.vm.$data.showOuter).to.be.true;
+      expect(wrapper.vm.$data.showInner).to.be.true; // fails here
     });
 
-    expect(wrapper.vm.pages.length).to.equal(count);
+    it("should cause `showOuter` and `showInner` to be set to `true` (with $nextTick)", done => {
+      wrapper.setProps({ show: true });
+
+      expect(wrapper.vm.$data.showOuter).to.be.true;
+
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.$data.showInner).to.be.true; // fails here
+        done();
+      });
+    });
+
+    it("should cause `showOuter` and `showInner` to be set to `true` (with _.delay)", done => {
+      wrapper.setProps({ show: true });
+
+      expect(wrapper.vm.$data.showOuter).to.be.true;
+
+      _.delay(() => {
+        expect(wrapper.vm.$data.showInner).to.be.true; // fails here
+        done();
+      }, 1500);
+    });
   });
+
+
 });

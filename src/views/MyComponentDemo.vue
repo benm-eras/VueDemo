@@ -1,18 +1,7 @@
 <template>
-  <div class='demo'>
-    <my-component>
-      <div class='page'>Page 1</div>
-      <div class='page'>Page 2</div>
-      <div class='page'>Page 3</div>
-    </my-component>
-  <hr/>
-    <my-component>
-      <div class='shade'></div>
-      <div class='page'>Page 1</div>
-      <div class='page'>Page 2</div>
-      <div class='page'>Page 3</div>
-      <div class='shade'></div>
-    </my-component>
+  <div>
+    <button type="button" @click="toggle">toggle</button>
+    <my-component :show="show"></my-component>
   </div>
 </template>
 
@@ -23,6 +12,16 @@ export default {
   name: "MyComponentDemo",
   components: {
     MyComponent
+  },
+  data: function() {
+    return {
+      show: false
+    };
+  },
+  methods: {
+    toggle: function() {
+      this.show = !this.show;
+    }
   }
-}
+};
 </script>
